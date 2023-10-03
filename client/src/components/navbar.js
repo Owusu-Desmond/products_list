@@ -1,18 +1,19 @@
 import React, { useRef, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../redux/products/products';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+    let formRef = useRef(null);
 
-    let formRef = useRef(null); // reference to the form element
-
-    // Assign the formRef after the component is mounted
     useEffect(() => {
         formRef.current = document.getElementById('product_form');
-    }, []); // Empty dependency array ensures this effect runs once after the initial render
+    }, []); 
 
-    const handleSaveClick = () => {
+    const handleSaveClick = (e) => {
+        e.preventDefault();
         if (formRef.current) {
-            formRef.current.submit();
+            formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); // dispatch submit event on the form cancelable will allow to preventDefault and bubbles will
         }
     };
 
@@ -41,8 +42,8 @@ const Navbar = () => {
                     <h2>Product Add</h2>
                 </div>
                 <div className='nav-btn'>
-                    <button onClick={handleSaveClick} className='save-product-btn'>SAVE</button>
-                    <NavLink to="/">CANCEL</NavLink>
+                    <button onClick={handleSaveClick} className='save-product-btn'>Save</button>
+                    <NavLink to="/">Cancel</NavLink>
                 </div>
             </nav>
         );

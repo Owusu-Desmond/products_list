@@ -101,11 +101,25 @@ form {
     }
 
     div {
-        width: 50%;
+        width: 65%;
         display: flex;
         justify-content: space-between;
         gap: 150px;
         align-items: center;
+    }
+}
+
+.option-container {
+    border: 2px solid $secondaryColor;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+    padding: 20px 0; 
+    box-shadow: 0 0 10px $primaryColor;
+    div {
+        width: 100%;
+        display: flex;
     }
 }
 

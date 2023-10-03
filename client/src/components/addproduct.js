@@ -1,6 +1,18 @@
 import React, { useState, useRef } from "react";
+import { addProduct } from "../redux/products/products";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    // clear error and notification on input change
+    const clearError = () => {
+        setError("");
+        setNotification("");
+    };
 
     let formRef = useRef(null);
 
@@ -8,37 +20,49 @@ const AddProduct = () => {
         sku: "",
         name: "",
         price: "",
-        productType: "DVD",
-        size: "",
-        weight: "",
-        height: "",
-        width: "",
-        length: "",
+        type: "",
+        attributes: {
+            size: "",
+            weight: "",
+            height: "",
+            width: "",
+            length: "",
+        },      
     });
 
     const [error, setError] = useState("");
     const [notification, setNotification] = useState("");
 
     const handleInputChange = (e) => {
+        clearError();
         const { id, value } = e.target;
-        setProductData({ ...productData, [id]: value });
+        setProductData(prevProductData => {
+            if (prevProductData.attributes.hasOwnProperty(id)) {
+                return {
+                    ...prevProductData,
+                    attributes: { ...prevProductData.attributes, [id]: value }
+                };
+            }
+            return { ...prevProductData, [id]: value };
+        });
     };
 
     const handleProductTypeChange = (e) => {
+        clearError();
         const { value } = e.target;
-        setProductData({ ...productData, productType: value });
+        setProductData({ ...productData, type: value });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // Perform form validation
-        if (!productData.sku || !productData.name || !productData.price) {
+        if (!productData.sku || !productData.name || !productData.price || !productData.type) {
             setError("Please, submit required data");
         } else if (
-            (productData.productType === "DVD" && !productData.size) ||
-            (productData.productType === "Book" && !productData.weight) ||
-            (productData.productType === "Furniture" &&
-                (!productData.height || !productData.width || !productData.length))
+            (productData.type === "DVD" && !productData.attributes.size) ||
+            (productData.type === "Book" && !productData.attributes.weight) ||
+            (productData.type === "Furniture" &&
+                (!productData.attributes.height || !productData.attributes.width || !productData.attributes.length))
         ) {
             setError("Please, provide the data of indicated type");
         } else {
@@ -47,14 +71,20 @@ const AddProduct = () => {
                 sku: "",
                 name: "",
                 price: "",
-                productType: "DVD",
-                size: "",
-                weight: "",
-                height: "",
-                width: "",
-                length: "",
+                type: "",
+                attributes: {
+                    size: "",
+                    weight: "",
+                    height: "",
+                    width: "",
+                    length: "",
+                },
             });
         }
+
+        // Dispatch the action
+        dispatch(addProduct(productData));
+        navigate("/");
     };
 
     return (
@@ -62,51 +92,59 @@ const AddProduct = () => {
             <form ref={formRef} id="product_form" onSubmit={handleSubmit}>
                 <div>
                     <label>SKU</label>
-                    <input type="text" id="sku" value={productData.sku} onChange={handleInputChange} />
+                    <input type="number" id="sku" value={productData.sku} onChange={handleInputChange} required/>
                 </div>
                 <div>
                     <label>Name</label>
-                    <input type="text" id="name" value={productData.name} onChange={handleInputChange} />
+                    <input type="text" id="name" value={productData.name} onChange={handleInputChange} required/>
                 </div>
                 <div>
-                    <label>Price</label>
-                    <input type="text" id="price" value={productData.price} onChange={handleInputChange} />
+                    <label>Price ($)</label>
+                    <input type="text" id="price" value={productData.price} onChange={handleInputChange} required/>
                 </div>
                 <div>
-                    <label>Type Swither</label>
-                    <select id="productType" value={productData.productType} onChange={handleProductTypeChange}>
+                    <label>Type Switcher</label>
+                    <select id="productType" value={productData.type} onChange={handleProductTypeChange} required>
+                        <option Value="">Type Switcher</option>
                         <option value="DVD" id="DVD">DVD</option>
                         <option value="Book" id="Book">Book</option>
                         <option value="Furniture" id="Furniture">Furniture</option>
                     </select>
                 </div>
-                {productData.productType === "DVD" && (
-                    <div id="size">
-                        <label>Size</label>
-                        <input type="text" id="size" value={productData.size} onChange={handleInputChange} />
+                {productData.type === "DVD" && (
+                    <div className="option-container">
+                        <div id="size">
+                            <label>Size (MB)</label>
+                            <input type="number" id="size" value={productData.attributes.size} onChange={handleInputChange} required/>
+                        </div>
+                        <p>Please, provide size</p>
                     </div>
                 )}
-                {productData.productType === "Book" && (
-                    <div id="weight">
-                        <label>Weight</label>
-                        <input type="text" id="weight" value={productData.weight} onChange={handleInputChange} />
+                {productData.type === "Book" && (
+                    <div className="option-container">
+                        <div id="weight">
+                            <label>Weight (KG)</label>
+                            <input type="number" id="weight" value={productData.attributes.weight} onChange={handleInputChange} required/>
+                        </div>
+                        <p>Please, provide weight</p>
                     </div>
                 )}
-                {productData.productType === "Furniture" && (
-                    <>
+                {productData.type === "Furniture" && (
+                    <div className="option-container">
                         <div id="height">
-                            <label>Height</label>
-                            <input type="text" id="height" value={productData.height} onChange={handleInputChange} />
+                            <label>Height (CM)</label>
+                            <input type="number" id="height" value={productData.attributes.height} onChange={handleInputChange} required/>
                         </div>
                         <div id="width">
-                            <label>Width</label>
-                            <input type="text" id="width" value={productData.width} onChange={handleInputChange} />
+                            <label>Width (CM)</label>
+                            <input type="number" id="width" value={productData.attributes.width} onChange={handleInputChange} required/>
                         </div>
                         <div id="length">
-                            <label>Length</label>
-                            <input type="text" id="length" value={productData.length} onChange={handleInputChange} />
+                            <label>Length (CM)</label>
+                            <input type="number" id="length" value={productData.attributes.length} onChange={handleInputChange} required/>
                         </div>
-                    </>
+                        <p>Please, provide dimensions</p>
+                    </div>
                 )}
                 {error && <div style={{ color: "red" }}>{error}</div>}
                 {notification && <div style={{ color: "green" }}>{notification}</div>}

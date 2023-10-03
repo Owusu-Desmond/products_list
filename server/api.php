@@ -14,8 +14,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 // Handle GET /api.php/products logic
 if ($method === 'GET') {
-    $db = new Database();
-    $products = $db->getProducts();
+    $products = Product::display();
     echo json_encode($products);
 }
 
