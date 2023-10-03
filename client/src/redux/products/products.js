@@ -30,34 +30,58 @@ const productsSlice = createSlice({
             state.status = 'loading';
         },
         [fetchProducts.fulfilled]: (state, action) => {
-            state.status = 'succeeded';
-            state.products = state.products.concat(action.payload);
+            return {
+                ...state,
+                status: 'succeeded',
+                products: action.payload
+            };
         },
         [fetchProducts.rejected]: (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
+            return {
+                ...state,
+                status: 'failed',
+                error: action.error.message
+            };
         },
         [addProduct.pending]: (state, action) => {
-            state.status = 'loading';
+            return {
+                ...state,
+                status: 'loading'
+            };
         },
         [addProduct.fulfilled]: (state, action) => {
-            state.status = 'succeeded';
-            state.products = state.products.concat(action.payload);
+            return {
+                ...state,
+                status: 'succeeded',
+                products: state.products.push(action.payload)
+            };
         },
         [addProduct.rejected]: (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
+            return {
+                ...state,
+                status: 'failed',
+                error: action.error.message
+            };
         },
         [deleteProduct.pending]: (state, action) => {
-            state.status = 'loading';
+            return {
+                ...state,
+                status: 'loading'
+            };
         },
         [deleteProduct.fulfilled]: (state, action) => {
-            state.status = 'succeeded';
-            state.products = state.products.filter(product => !action.payload.includes(product.id));
+            return {
+                ...state,
+                status: 'succeeded',
+                products: state.products.filter(product => !action.payload.includes(product.id))
+            }
         },
         [deleteProduct.rejected]: (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
+            return {
+                ...state,
+                status: 'failed',
+                error: action.error.message
+            };
         }
     }
 });

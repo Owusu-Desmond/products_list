@@ -1,16 +1,16 @@
 import React from "react";
 
 const Product = ({ product }) => {
-    const { sku, name, price, productType, size, weight, height, width, length } = product;
+    const { SKU, Name, Price, Type, Size, Weight, Height, Width, Length } = product;
 
     const productTypeDisplay = () => {
-        switch (productType) {
+        switch (Type) {
             case "DVD":
-                return <div>Size: {size} MB</div>;
+                return <div>Size: {Size} MB</div>;
             case "Book":
-                return <div>Weight: {weight} Kg</div>;
+                return <div>Weight: {Weight} Kg</div>;
             case "Furniture":
-                return <div>Dimension: {height}x{width}x{length}</div>;
+                return <div>Dimension: {Height}x{Width}x{Length}</div>;
             default:
                 return null;
         }
@@ -22,9 +22,9 @@ const Product = ({ product }) => {
             <div className="product-checkbox">
                 <input type="checkbox" className="delete-checkbox"/>
             </div>
-            <div >{sku}</div>
-            <div>{name}</div>
-            <div>{price} $</div>
+            <div >{SKU}</div>
+            <div>{Name}</div>
+            <div>{Price} $</div>
             <div>{productTypeDisplay()}</div>
         </div>
     );

@@ -5,6 +5,10 @@ ini_set('display_errors', 1); // Show errors for debugging
 include_once 'product.php';
 
 header('Content-Type: application/json');
+// Enable CORS
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type");
 
 $method = $_SERVER['REQUEST_METHOD'];
 
