@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Products from './components/products';
@@ -12,6 +12,9 @@ function App() {
         <Route path="/" element={<Products />} />
         <Route path="/addproduct" element={<AddProduct />} />
       </Routes>
+      <footer>
+        <p>Scandiweb Test assignment</p>
+      </footer>
     </BrowserRouter>
   );
 }

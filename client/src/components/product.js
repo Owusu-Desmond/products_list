@@ -6,11 +6,11 @@ const Product = ({ product }) => {
     const productTypeDisplay = () => {
         switch (productType) {
             case "DVD":
-                return <div>{size} MB</div>;
+                return <div>Size: {size} MB</div>;
             case "Book":
-                return <div>{weight} Kg</div>;
+                return <div>Weight: {weight} Kg</div>;
             case "Furniture":
-                return <div>{height}x{width}x{length}</div>;
+                return <div>Dimension: {height}x{width}x{length}</div>;
             default:
                 return null;
         }
@@ -18,11 +18,14 @@ const Product = ({ product }) => {
 
     return (
         <div className="product">
-            <div className="product__sku">{sku}</div>
-            <div className="product__name">{name}</div>
-            <div className="product__price">{price}</div>
-            <div className="product__productType">{productType}</div>
-            <div className="product__productTypeDisplay">{productTypeDisplay()}</div>
+            {/* checkbox */}
+            <div className="product-checkbox">
+                <input type="checkbox" className="delete-checkbox"/>
+            </div>
+            <div >{sku}</div>
+            <div>{name}</div>
+            <div>{price} $</div>
+            <div>{productTypeDisplay()}</div>
         </div>
     );
 }

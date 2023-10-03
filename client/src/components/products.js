@@ -40,10 +40,34 @@ const Products = () => {
             width: 100,
             length: 100,
         },
+        {
+            id: 4,
+            sku: "133",
+            name: "Product 4",
+            price: 100,
+            productType: "DVD",
+            size: 100,
+            weight: 100,
+            height: 100,
+            width: 100,
+            length: 100,
+        },
+        {
+            id: 5,
+            sku: "453",
+            name: "Product 5",
+            price: 200,
+            productType: "Book",
+            size: 100,
+            weight: 100,
+            height: 100,
+            width: 100,
+            length: 100,
+        }
     ];
 
     return (
-        <div className="products">
+        <div className="product-list">
             {products.map((product) => (
                 <Product key={product.id} product={product} />
             ))}

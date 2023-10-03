@@ -73,11 +73,11 @@ const AddProduct = () => {
                     <input type="text" id="price" value={productData.price} onChange={handleInputChange} />
                 </div>
                 <div>
-                    <label>Product Type</label>
+                    <label>Type Swither</label>
                     <select id="productType" value={productData.productType} onChange={handleProductTypeChange}>
-                        <option value="DVD">DVD</option>
-                        <option value="Book">Book</option>
-                        <option value="Furniture">Furniture</option>
+                        <option value="DVD" id="DVD">DVD</option>
+                        <option value="Book" id="Book">Book</option>
+                        <option value="Furniture" id="Furniture">Furniture</option>
                     </select>
                 </div>
                 {productData.productType === "DVD" && (
@@ -93,7 +93,7 @@ const AddProduct = () => {
                     </div>
                 )}
                 {productData.productType === "Furniture" && (
-                    <div>
+                    <>
                         <div id="height">
                             <label>Height</label>
                             <input type="text" id="height" value={productData.height} onChange={handleInputChange} />
@@ -106,12 +106,8 @@ const AddProduct = () => {
                             <label>Length</label>
                             <input type="text" id="length" value={productData.length} onChange={handleInputChange} />
                         </div>
-                    </div>
+                    </>
                 )}
-                <button type="submit">Save</button>
-                <button type="button" onClick={() => setNotification("Product addition canceled!")}>
-                    Cancel
-                </button>
                 {error && <div style={{ color: "red" }}>{error}</div>}
                 {notification && <div style={{ color: "green" }}>{notification}</div>}
             </form>
