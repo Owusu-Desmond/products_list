@@ -4,7 +4,7 @@ include_once 'database.php';
 
 interface ProductInterface {
     public function save();
-    public function display();
+    public static function display();
 }
 
 class Product implements ProductInterface {
@@ -26,13 +26,10 @@ class Product implements ProductInterface {
         header('Location: /');
     }
 
-    public function display() {
-        $product = $this->db->getProduct($this->sku);
-        echo "<div class='product'>";
-        echo "<h3>" . $product['name'] . "</h3>";
-        echo "<p>SKU: " . $product['sku'] . "</p>";
-        echo "<p>Price: " . $product['price'] . "</p>";
-        echo "</div>";
+    public static function display() {
+        $db = new Database();
+        $products = $db->getProducts();
+        return $products;
     }
     
 }
