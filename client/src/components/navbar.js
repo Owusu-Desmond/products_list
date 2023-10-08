@@ -10,13 +10,10 @@ const Navbar = () => {
     const location = useLocation();
 
     useEffect(() => {
-        console.log(formRef.current);
         formRef.current = document.getElementById('product_form');
     }, [location.pathname]); // update formRef.current when location.pathname changes
 
     const handleSaveClick = (e) => {
-        // e.preventDefault();
-        console.log(formRef.current);
         if (formRef.current) {
             formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); // dispatch submit event on the form cancelable will allow to preventDefault and bubbles will
         }
@@ -37,7 +34,7 @@ const Navbar = () => {
                     <h2>Product List</h2>
                 </div>
                 <div className='nav-btn'>
-                    <NavLink to="/addproduct">ADD</NavLink>
+                    <NavLink to="/add-product">ADD</NavLink>
                     <button id='delete-product-btn' disabled={isProductsChecked} onClick={handleDeleteClick}>MASS DELETE</button>
                 </div>
             </nav>

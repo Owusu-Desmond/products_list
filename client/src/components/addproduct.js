@@ -58,7 +58,6 @@ const AddProduct = () => {
         e.preventDefault();
         // Perform form validation
         if (!productData.sku || !productData.name || !productData.price || !productData.type) {
-            console.log("Please, submit required data");
             setError("Please, submit required data");
         } else if (
             (productData.type === "DVD" && !productData.attributes.size) ||
