@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const PRODUCT_URL = 'http://localhost/products_list/products_list/server/api.php';
+const PRODUCTS_URL = 'https://scandiweblistaddproducts.000webhostapp.com/';
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
-    const response = await axios.get(PRODUCT_URL);
+    const response = await axios.get(PRODUCTS_URL);
     // add checked property to each product
     response.data.forEach(product => {
         product.checked = false;
@@ -13,12 +13,12 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ()
 });
 
 export const addProduct = createAsyncThunk('products/addProduct', async (product) => {
-    const response = await axios.post(PRODUCT_URL, product);
+    const response = await axios.post(PRODUCTS_URL, product);
     return response.data;
 });
 
 export const deleteProduct = createAsyncThunk('products/deleteProduct', async (productIds) => {
-    const response = await axios.delete(PRODUCT_URL, { data: { skus: productIds } });
+    const response = await axios.delete(PRODUCTS_URL, { data: { skus: productIds } });
     return response.data;
 });
 
@@ -41,71 +41,44 @@ const productsSlice = createSlice({
                 }
                 return product;
             });
-
-            return {
-                ...state,
-                products: updatedProducts
-            };
+            state.products = updatedProducts;
         }
     },
-    extraReducers: {
-        [fetchProducts.pending]: (state, action) => {
-            state.status = 'loading';
-        },
-        [fetchProducts.fulfilled]: (state, action) => {
-            return {
-                ...state,
-                status: 'succeeded',
-                products: action.payload
-            };
-        },
-        [fetchProducts.rejected]: (state, action) => {
-            return {
-                ...state,
-                status: 'failed',
-                error: action.error.message
-            };
-        },
-        [addProduct.pending]: (state, action) => {
-            return {
-                ...state,
-                status: 'loading'
-            };
-        },
-        [addProduct.fulfilled]: (state, action) => {
-            return {
-                ...state,
-                status: 'succeeded',
-                products: state.products.push(action.payload)
-            };
-        },
-        [addProduct.rejected]: (state, action) => {
-            return {
-                ...state,
-                status: 'failed',
-                error: action.error.message
-            };
-        },
-        [deleteProduct.pending]: (state, action) => {
-            return {
-                ...state,
-                status: 'loading'
-            };
-        },
-        [deleteProduct.fulfilled]: (state, action) => {
-            return {
-                ...state,
-                status: 'succeeded',
-                products: action.payload
-            }
-        },
-        [deleteProduct.rejected]: (state, action) => {
-            return {
-                ...state,
-                status: 'failed',
-                error: action.error.message
-            };
-        }
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchProducts.pending, (state, action) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchProducts.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.products = action.payload;
+            })
+            .addCase(fetchProducts.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            })
+            .addCase(addProduct.pending, (state, action) => {
+                state.status = 'loading';
+            })
+            .addCase(addProduct.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.products.push(action.payload);
+            })
+            .addCase(addProduct.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            })
+            .addCase(deleteProduct.pending, (state, action) => {
+                state.status = 'loading';
+            })
+            .addCase(deleteProduct.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.products = action.payload;
+            })
+            .addCase(deleteProduct.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            });
     }
 });
 
