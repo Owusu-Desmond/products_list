@@ -101,7 +101,7 @@ const AddProduct = () => {
                 </div>
                 <div>
                     <label>Price ($)</label>
-                    <input type="text" id="price" value={productData.price} onChange={handleInputChange} required/>
+                    <input type="number" id="price" value={productData.price} onChange={handleInputChange} required/>
                 </div>
                 <div>
                     <label>Type Switcher</label>
