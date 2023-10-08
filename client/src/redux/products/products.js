@@ -5,17 +5,20 @@ const PRODUCT_URL = 'http://localhost/products_list/products_list/server/api.php
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
     const response = await axios.get(PRODUCT_URL);
+    // add checked property to each product
+    response.data.forEach(product => {
+        product.checked = false;
+    });
     return response.data;
 });
 
 export const addProduct = createAsyncThunk('products/addProduct', async (product) => {
-    console.log(product);
     const response = await axios.post(PRODUCT_URL, product);
     return response.data;
 });
 
 export const deleteProduct = createAsyncThunk('products/deleteProduct', async (productIds) => {
-    const response = await axios.delete(PRODUCT_URL, { data: { ids: productIds } });
+    const response = await axios.delete(PRODUCT_URL, { data: { skus: productIds } });
     return response.data;
 });
 
@@ -25,6 +28,25 @@ const productsSlice = createSlice({
         products: [],
         status: null,
         error: null
+    },
+    reducers: {
+        updateProduct: (state, action) => {
+            const productSKU = action.payload;
+            const updatedProducts = state.products.map(product => {
+                if (product.SKU === productSKU) {
+                    return {
+                        ...product,
+                        checked: !product.checked
+                    };
+                }
+                return product;
+            });
+
+            return {
+                ...state,
+                products: updatedProducts
+            };
+        }
     },
     extraReducers: {
         [fetchProducts.pending]: (state, action) => {
@@ -74,7 +96,7 @@ const productsSlice = createSlice({
             return {
                 ...state,
                 status: 'succeeded',
-                products: state.products.filter(product => !action.payload.includes(product.id))
+                products: action.payload
             }
         },
         [deleteProduct.rejected]: (state, action) => {
@@ -86,5 +108,7 @@ const productsSlice = createSlice({
         }
     }
 });
+
+export const { updateProduct } = productsSlice.actions;
 
 export default productsSlice.reducer;

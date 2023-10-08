@@ -8,9 +8,8 @@ const Products = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log("useEffect");
         dispatch(fetchProducts());
-    }, []);
+    }, [dispatch]);
 
     const products = useSelector((state) => state.products.products);
 

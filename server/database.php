@@ -42,6 +42,14 @@ class Database {
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute(['sku' => $sku, 'name' => $name, 'price' => $price, 'type' => $type, 'size' => $size, 'height' => $height, 'width' => $width, 'length' => $length, 'weight' => $weight]);
     }
+
+    public function deleteProducts($skus) {
+        $sql = "DELETE FROM Products WHERE sku IN (";
+        $sql .= str_repeat('?,', count($skus) - 1) . '?';
+        $sql .= ")";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute($skus);
+    }
 }
 
 ?>

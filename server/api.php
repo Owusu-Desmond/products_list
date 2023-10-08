@@ -44,4 +44,23 @@ if ($method === 'POST') {
     }
 }
 
+// Handle DELETE /api.php/products logic
+
+if ($method === 'DELETE') {
+    $json_data = file_get_contents("php://input");
+    $data = json_decode($json_data, true);
+
+    $skus = $data['skus'];
+
+    try {
+        Product::delete($skus);
+        // return remaining products
+        $products = Product::display();
+        echo json_encode($products);
+    } catch (Exception $e) {
+        http_response_code(400); // Bad request
+        echo json_encode(array('message' => $e->getMessage()));
+    }
+}
+
 ?>

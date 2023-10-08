@@ -41,7 +41,7 @@ a {
         padding: 5px 10px;
         border-radius: 5px;
     }
-    .save-product-btn {
+    .save-product-btn, #delete-product-btn {
         @extend a;
         font-size: 18px;
         font-weight: 700;

@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateProduct } from "../redux/products/products";
 
 const Product = ({ product }) => {
-    const { SKU, Name, Price, Type, Size, Weight, Height, Width, Length } = product;
+    const dispatch = useDispatch();
+
+    const { SKU, Name, Price, Type, Size, Weight, Height, Width, Length, checked } = product;
 
     const productTypeDisplay = () => {
         switch (Type) {
@@ -16,11 +20,17 @@ const Product = ({ product }) => {
         }
     };
 
+    const handleCheckboxChange = (e) => {
+        const { value } = e.target;
+        // dispatch updateProduct action
+        dispatch(updateProduct(parseInt(value)));
+    }
+
     return (
         <div className="product">
-            {/* checkbox */}
+            {/* checkbox */} 
             <div className="product-checkbox">
-                <input type="checkbox" className="delete-checkbox"/>
+                <input type="checkbox" value={SKU} className="delete-checkbox" onChange={handleCheckboxChange} />
             </div>
             <div >{SKU}</div>
             <div>{Name}</div>

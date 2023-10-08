@@ -31,6 +31,11 @@ class Product implements ProductInterface {
         $products = $db->getProducts();
         return $products;
     }
+
+    public static function delete($skus) {
+        $db = new Database();
+        $db->deleteProducts($skus);
+    }
     
 }
 

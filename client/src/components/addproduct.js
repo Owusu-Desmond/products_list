@@ -27,7 +27,8 @@ const AddProduct = () => {
             height: "",
             width: "",
             length: "",
-        },      
+        },
+        checked: false,
     });
 
     const [error, setError] = useState("");
@@ -57,6 +58,7 @@ const AddProduct = () => {
         e.preventDefault();
         // Perform form validation
         if (!productData.sku || !productData.name || !productData.price || !productData.type) {
+            console.log("Please, submit required data");
             setError("Please, submit required data");
         } else if (
             (productData.type === "DVD" && !productData.attributes.size) ||
@@ -79,12 +81,12 @@ const AddProduct = () => {
                     width: "",
                     length: "",
                 },
+                checked: false,
             });
+            // Dispatch the action
+            dispatch(addProduct(productData));
+            navigate("/");
         }
-
-        // Dispatch the action
-        dispatch(addProduct(productData));
-        navigate("/");
     };
 
     return (
@@ -105,7 +107,7 @@ const AddProduct = () => {
                 <div>
                     <label>Type Switcher</label>
                     <select id="productType" value={productData.type} onChange={handleProductTypeChange} required>
-                        <option Value="">Type Switcher</option>
+                        <option value="">Type Switcher</option>
                         <option value="DVD" id="DVD">DVD</option>
                         <option value="Book" id="Book">Book</option>
                         <option value="Furniture" id="Furniture">Furniture</option>
