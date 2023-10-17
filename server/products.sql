@@ -22,7 +22,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `Products` (
-  `SKU` int(50) NOT NULL,
+  `SKU` varchar(50) NOT NULL,
   `Name` varchar(250) NOT NULL,
   `Price` decimal(20,0) NOT NULL,
   `Type` varchar(50) NOT NULL,
