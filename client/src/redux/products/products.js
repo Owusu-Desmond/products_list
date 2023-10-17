@@ -8,7 +8,6 @@ const PRODUCTS_URL = 'http://localhost/products_list/server/';
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
     const response = await axios.get(PRODUCTS_URL);
     // add checked property to each product
-    console.log(response.data);
     response.data.forEach(product => {
         product.checked = false;
     });
@@ -35,7 +34,6 @@ const productsSlice = createSlice({
     reducers: {
         updateProduct: (state, action) => {
             const productSKU = action.payload;
-            console.log(productSKU);
             const updatedProducts = state.products.map(product => {
                 if (parseInt(product.SKU) === productSKU) {
                     return {

@@ -3,21 +3,13 @@
 include_once 'dbConnection.php';
 
 class Database extends DatabaseConnection {
-    
+    // split by product types - they should be sorted by primary key in database.
     public function getProducts() {
-        $sql = "SELECT * FROM Products";
+        $sql = "SELECT * FROM Products ORDER BY Type, SKU";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
-        $result = $stmt->fetchAll();
-        return $result;
-    }
-
-    public function getProduct($sku) {
-        $sql = "SELECT * FROM Products WHERE sku = :sku";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['sku' => $sku]);
-        $result = $stmt->fetch();
-        return $result;
+        $products = $stmt->fetchAll();
+        return $products;  
     }
 
     public function addProduct($sku, $name, $price, $type, $size = null, $height = null, $width = null, $length = null, $weight = null) {
