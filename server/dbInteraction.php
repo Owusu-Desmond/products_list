@@ -1,29 +1,12 @@
 <?php
 
-class Database {
-    private $host = 'localhost';
-    private $dbname = 'ProductList';
-    private $username = 'root';
-    private $password = '';
+include_once 'dbConnection.php';
 
-    function __construct() {
-        $this->connect();
-    }
-
-    private function connect() {
-        try {
-            $dsn = "mysql:host=$this->host;dbname=$this->dbname"; // Data Source Name
-            $pdo = new PDO($dsn, $this->username, $this->password);
-            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            return $pdo;
-        } catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
-        }
-    }
-
+class Database extends DatabaseConnection {
+    
     public function getProducts() {
         $sql = "SELECT * FROM Products";
-        $stmt = $this->connect()->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
         return $result;
@@ -31,7 +14,7 @@ class Database {
 
     public function getProduct($sku) {
         $sql = "SELECT * FROM Products WHERE sku = :sku";
-        $stmt = $this->connect()->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['sku' => $sku]);
         $result = $stmt->fetch();
         return $result;
@@ -39,17 +22,15 @@ class Database {
 
     public function addProduct($sku, $name, $price, $type, $size = null, $height = null, $width = null, $length = null, $weight = null) {
         $sql = "INSERT INTO Products (SKU, Name, Price, Type, Size, Height, Width, Length, Weight) VALUES (:sku, :name, :price, :type, :size, :height, :width, :length, :weight)";
-        $stmt = $this->connect()->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['sku' => $sku, 'name' => $name, 'price' => $price, 'type' => $type, 'size' => $size, 'height' => $height, 'width' => $width, 'length' => $length, 'weight' => $weight]);
     }
 
     public function deleteProducts($skus) {
-        $sql = "DELETE FROM Products WHERE sku IN (";
-        $sql .= str_repeat('?,', count($skus) - 1) . '?';
-        $sql .= ")";
-        $stmt = $this->connect()->prepare($sql);
+        $placeholders = implode(',', array_fill(0, count($skus), '?'));
+        $sql = "DELETE FROM Products WHERE sku IN ($placeholders)";
+        $stmt = $this->pdo->prepare($sql);
         $stmt->execute($skus);
     }
 }
-
 ?>

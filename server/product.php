@@ -1,6 +1,6 @@
 <?php
 
-include_once 'database.php';
+include_once 'dbInteraction.php';
 
 interface ProductInterface {
     public function save();
@@ -89,6 +89,7 @@ class Book extends Product {
     }
 }
 
+// Factory pattern to create product objects based on type
 class ProductFactory {
     private static $productTypes = [
         'DVD' => DVD::class,
