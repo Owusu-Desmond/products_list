@@ -1,7 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const PRODUCTS_URL = 'https://scandiweblistaddproducts.000webhostapp.com/';
+// backend deployed at https://bundanatechnologies.com/react/
+
+const PRODUCTS_URL = 'https://bundanatechnologies.com/react/';
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
     const response = await axios.get(PRODUCTS_URL);
@@ -33,7 +35,7 @@ const productsSlice = createSlice({
         updateProduct: (state, action) => {
             const productSKU = action.payload;
             const updatedProducts = state.products.map(product => {
-                if (product.SKU === productSKU) {
+                if (parseInt(product.SKU) === productSKU) {
                     return {
                         ...product,
                         checked: !product.checked
