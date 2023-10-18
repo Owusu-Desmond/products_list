@@ -35,7 +35,7 @@ const productsSlice = createSlice({
         updateProduct: (state, action) => {
             const productSKU = action.payload;
             const updatedProducts = state.products.map(product => {
-                if (parseInt(product.SKU) === productSKU) {
+                if (product.SKU === productSKU) {
                     return {
                         ...product,
                         checked: !product.checked

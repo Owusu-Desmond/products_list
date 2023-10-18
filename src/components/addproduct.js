@@ -93,7 +93,7 @@ const AddProduct = () => {
             <form ref={formRef} id="product_form" onSubmit={handleSubmit}>
                 <div>
                     <label>SKU</label>
-                    <input type="number" id="sku" value={productData.sku} onChange={handleInputChange} required/>
+                    <input type="text" id="sku" value={productData.sku} onChange={handleInputChange} required/>
                 </div>
                 <div>
                     <label>Name</label>
