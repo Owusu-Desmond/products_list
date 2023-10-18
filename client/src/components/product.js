@@ -23,7 +23,7 @@ const Product = ({ product }) => {
     const handleCheckboxChange = (e) => {
         const { value } = e.target;
         // dispatch updateProduct action
-        dispatch(updateProduct(parseInt(value)));
+        dispatch(updateProduct(value));
     }
 
     return (
