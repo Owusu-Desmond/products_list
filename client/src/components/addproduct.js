@@ -114,7 +114,7 @@ const AddProduct = () => {
                 </div>
                 {productData.type === "DVD" && (
                     <div className="option-container">
-                        <div id="size">
+                        <div>
                             <label>Size (MB)</label>
                             <input type="number" id="size" value={productData.attributes.size} onChange={handleInputChange} required/>
                         </div>
@@ -123,7 +123,7 @@ const AddProduct = () => {
                 )}
                 {productData.type === "Book" && (
                     <div className="option-container">
-                        <div id="weight">
+                        <div>
                             <label>Weight (KG)</label>
                             <input type="number" id="weight" value={productData.attributes.weight} onChange={handleInputChange} required/>
                         </div>
@@ -132,15 +132,15 @@ const AddProduct = () => {
                 )}
                 {productData.type === "Furniture" && (
                     <div className="option-container">
-                        <div id="height">
+                        <div>
                             <label>Height (CM)</label>
                             <input type="number" id="height" value={productData.attributes.height} onChange={handleInputChange} required/>
                         </div>
-                        <div id="width">
+                        <div>
                             <label>Width (CM)</label>
                             <input type="number" id="width" value={productData.attributes.width} onChange={handleInputChange} required/>
                         </div>
-                        <div id="length">
+                        <div>
                             <label>Length (CM)</label>
                             <input type="number" id="length" value={productData.attributes.length} onChange={handleInputChange} required/>
                         </div>
