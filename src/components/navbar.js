@@ -41,7 +41,7 @@ const Navbar = () => {
         );
     }
 
-    if (location.pathname === '/add-product') {
+    if (location.pathname === '/addproduct') {
         return (
             <nav>
                 <div>
