@@ -10,7 +10,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Products />} />
-        <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/addproduct" element={<AddProduct />} />
       </Routes>
       <footer>
         <p>Scandiweb Test assignment</p>

@@ -34,7 +34,7 @@ const Navbar = () => {
                     <h2>Product List</h2>
                 </div>
                 <div className='nav-btn'>
-                    <NavLink to="/add-product">ADD</NavLink>
+                    <NavLink to="/addproduct">ADD</NavLink>
                     <button id='delete-product-btn' disabled={isProductsChecked} onClick={handleDeleteClick}>MASS DELETE</button>
                 </div>
             </nav>
