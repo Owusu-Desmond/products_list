@@ -13,7 +13,9 @@ This project is a web application developed as part of the Scandiweb Junior Deve
 - **Backend:** PHP, MySQL
 - **Frontend:** SCSS, React, Redux, Redux Thunk, React Router, Axios.
 
-## Screenshots
+## Screenshot of the project
+
+![Screenshot from 2023-10-18 22-54-58](https://github.com/Owusu-Desmond/products_list/assets/92303891/554f1e9f-f10c-49a6-b484-a5a95dcea501)
 
 
 ## Live Demo
