@@ -34,14 +34,14 @@ const Navbar = () => {
                     <h2>Product List</h2>
                 </div>
                 <div className='nav-btn'>
-                    <NavLink to="/addproduct">ADD</NavLink>
+                    <NavLink to="/add-product">ADD</NavLink>
                     <button id='delete-product-btn' disabled={isProductsChecked} onClick={handleDeleteClick}>MASS DELETE</button>
                 </div>
             </nav>
         );
     }
 
-    if (location.pathname === '/addproduct') {
+    if (location.pathname === '/add-product') {
         return (
             <nav>
                 <div>
